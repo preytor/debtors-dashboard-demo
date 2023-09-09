@@ -1,0 +1,4 @@
+# We ignore the mysql database files
+data/*
+# We remove .pyc files
+*.pyc
