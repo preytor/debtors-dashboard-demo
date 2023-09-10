@@ -4,6 +4,7 @@ from debtors.models import Debtor
 
 # Create your models here.
 class Payment(models.Model):
+    id = models.AutoField(primary_key=True)
     debtor = models.ForeignKey(Debtor, on_delete=models.CASCADE)
     payment_date = models.DateField()
     payment_amount = models.DecimalField(max_digits=10, decimal_places=2)
