@@ -8,12 +8,15 @@ from .forms import WorkerForm
 from .serializer import WorkerSerializer
 from .filters import WorkerFilter
 
+from backend_debtors.paginations import CustomPagination
+
 # Create your views here.
 # We get a filtered view for the worker
 class WorkerViewSet(viewsets.ModelViewSet):
+
+    pagination_class = CustomPagination
     
     def list_workers(self, request):
-        print("request", request.query_params)
         self.filterset_class = WorkerFilter
         queryset = Worker.objects.all()
         name = self.request.query_params.get('name', None)
@@ -23,7 +26,14 @@ class WorkerViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(name=name)
         if role is not None:
             queryset = queryset.filter(role=role)
-        print("queryset", queryset)
+
+        # Define the number of items per page
+        page = self.paginate_queryset(queryset)
+        
+        if page is not None:
+            serializer = WorkerSerializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        
         serializer = WorkerSerializer(queryset, many=True)
         return Response(serializer.data)
 

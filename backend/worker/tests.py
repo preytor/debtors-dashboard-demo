@@ -69,15 +69,22 @@ class WorkerApiTestCase(TestCase):
     def test_get_all_workers(self):
         response = self.client.get('/api/workers')
         self.assertEqual(response.status_code, 200)
-    
-    # create a worker
-    def test_post_worker(self):
-        response = self.client.post('/api/worker', {
+
+    def test_get_all_workers_with_params(self):
+        response = self.client.get('/api/workers', {
             'name': 'testAPI',
-            'contact_info': 'testAPI',
             'role': 'testAPI',
         })
         self.assertEqual(response.status_code, 200)
+    
+    # create a worker
+    def test_post_worker_found(self):
+        response = self.client.get('/api/workers?name=testAPI')
+        self.assertEquals(len(response.data), 1)
+
+    def test_post_worker_not_found(self):
+        response = self.client.get('/api/workers?name=testAPI2')
+        self.assertEquals(len(response.data), 0)
     
     # get a worker by id
     def test_get_worker(self):
