@@ -2,9 +2,9 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
-    path('workers/', WorkerView.as_view({
-        'get': 'list_workers'
-    }), name='list_workers'),
+    path('workers', WorkerViewSet.as_view({
+        'get': 'list_workers',
+    }), name='workers'),
     path('worker', WorkerView.as_view({
         'post': 'create_worker',
     }), name='worker_data'),

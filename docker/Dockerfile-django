@@ -14,5 +14,6 @@ RUN apt-get install -y unixodbc-dev
 RUN pip install -r /app/requirements.txt
 
 CMD python manage.py makemigrations && python manage.py migrate && \
+    python manage.py test && \
     # python manage.py loaddata */fixtures/*.json && \
     python manage.py runserver 0.0.0.0:8000

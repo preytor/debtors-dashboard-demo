@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'debtors',
     'payment',
     'worker',
+    # Third party
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
