@@ -1,0 +1,8 @@
+from rest_framework import serializers
+
+from .models import Debtor
+
+class DebtorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Debtor
+        fields = ('id', 'name', 'contact_info', 'initial_debt', 'legal_status')
