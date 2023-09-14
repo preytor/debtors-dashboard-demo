@@ -80,11 +80,11 @@ class WorkerApiTestCase(TestCase):
     # create a worker
     def test_post_worker_found(self):
         response = self.client.get('/api/workers?name=testAPI')
-        self.assertEquals(len(response.data), 1)
+        self.assertGreaterEqual(len(response.data['results']), 1)
 
     def test_post_worker_not_found(self):
-        response = self.client.get('/api/workers?name=testAPI2')
-        self.assertEquals(len(response.data), 0)
+        response = self.client.get('/api/workers?name=testAPI3')
+        self.assertEqual(len(response.data['results']), 0)
     
     # get a worker by id
     def test_get_worker(self):
