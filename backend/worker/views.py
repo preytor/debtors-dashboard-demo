@@ -44,15 +44,12 @@ class WorkerView(viewsets.ModelViewSet):
         form = WorkerForm(request.POST)
         if form.is_valid():
             form.save()
-        return Response("Item successfully created")
+        return Response(form.data, status=201)
     
     # Read
     def list_workers(self, request):
-        print("list_workers", request.data)
         workers = Worker.objects.all()
-        print("workers", workers)
         serializer = WorkerSerializer(workers, many=True)
-        print("serializer", serializer)
         return Response(serializer.data)
     
     def get_worker_data(self, request, pk):
@@ -72,5 +69,5 @@ class WorkerView(viewsets.ModelViewSet):
     def delete_worker_data(self, request, pk):
         worker = get_object_or_404(Worker, id=pk)
         worker.delete()
-        return Response("Item successfully deleted")
+        return Response(status=200)
     

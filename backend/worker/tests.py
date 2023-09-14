@@ -77,15 +77,28 @@ class WorkerApiTestCase(TestCase):
         })
         self.assertEqual(response.status_code, 200)
     
-    # create a worker
-    def test_post_worker_found(self):
+    def test_worker_found(self):
         response = self.client.get('/api/workers?name=testAPI')
         self.assertGreaterEqual(len(response.data['results']), 1)
 
-    def test_post_worker_not_found(self):
+    def test_worker_not_found(self):
         response = self.client.get('/api/workers?name=testAPI3')
         self.assertEqual(len(response.data['results']), 0)
     
+    # create a worker
+    def test_post_worker(self):
+        response = self.client.post(path='/api/worker', data={
+            'name': 'testAPI2',
+            'contact_info': 'testAPI2',
+            'role': 'testAPI2',
+        }, content_type='application/json', data_type='json')
+        self.assertEqual(response.status_code, 201)
+        self.assertDictContainsSubset(response.data, {
+            'name': 'testAPI2',
+            'contact_info': 'testAPI2',
+            'role': 'testAPI2',
+        })
+
     # get a worker by id
     def test_get_worker(self):
         id = self.worker.id
@@ -108,6 +121,7 @@ class WorkerApiTestCase(TestCase):
             'role': 'testAPI2',
         })
     
+    # delete a worker by id
     def test_delete_worker(self):
         id = self.worker.id
         response = self.client.delete(f'/api/worker/{id}')
