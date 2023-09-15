@@ -18,7 +18,7 @@ class WorkerViewSet(viewsets.ModelViewSet):
     
     def list_workers(self, request):
         self.filterset_class = WorkerFilter
-        queryset = Worker.objects.all()
+        queryset = Worker.objects.order_by('id')
         name = self.request.query_params.get('name', None)
         role = self.request.query_params.get('role', None)
 
