@@ -18,7 +18,7 @@ class DebtorViewSet(viewsets.ModelViewSet):
 
     def list_debtors(self, request):
         self.filterset_class = DebtorFilter
-        queryset = Debtor.objects.all()
+        queryset = Debtor.objects.order_by('id')
         name = self.request.query_params.get('name', None)
         initial_debt = self.request.query_params.get('initial_debt', None)
         legal_status = self.request.query_params.get('legal_status', None)
