@@ -5,7 +5,7 @@ from .models import Payment
 
 class PaymentFilter(filters.FilterSet):
 
-    debtor = LikeFilter(field_name='debtor')
+    debtor = filters.NumberFilter(field_name='debtor__id')
     payment_date = LikeFilter(field_name='payment_date')
     payment_date__gte = filters.DateFilter(field_name='payment_date', lookup_expr='gte')
     payment_date__lte = filters.DateFilter(field_name='payment_date', lookup_expr='lte')
