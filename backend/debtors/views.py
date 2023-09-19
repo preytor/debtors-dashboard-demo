@@ -20,13 +20,10 @@ class DebtorViewSet(viewsets.ModelViewSet):
         self.filterset_class = DebtorFilter
         queryset = Debtor.objects.order_by('id')
         name = self.request.query_params.get('name', None)
-        initial_debt = self.request.query_params.get('initial_debt', None)
         legal_status = self.request.query_params.get('legal_status', None)
 
         if name is not None:
             queryset = queryset.filter(name=name)
-        if initial_debt is not None:
-            queryset = queryset.filter(initial_debt=initial_debt)
         if legal_status is not None:
             queryset = queryset.filter(legal_status=legal_status)
 

@@ -9,13 +9,11 @@ class DebtorTestCase(TestCase):
         Debtor.objects.create(
             name='test',
             contact_info='test',
-            initial_debt=100,
             legal_status='Active',
         )
         Debtor.objects.create(
             name='test2',
             contact_info='test',
-            initial_debt=100,
             legal_status='Active',
         )
 
@@ -44,7 +42,6 @@ class DebtorFormTestCase(TestCase):
         form = DebtorForm(data={
             'name': '',
             'contact_info': '',
-            'initial_debt': '',
             'legal_status': '',
         })
         self.assertFalse(form.is_valid())
@@ -53,7 +50,6 @@ class DebtorFormTestCase(TestCase):
         form = DebtorForm(data={
             'name': 'test',
             'contact_info': 'test',
-            'initial_debt': 100,
             'legal_status': 'Active',
         })
         self.assertTrue(form.is_valid())
@@ -64,7 +60,6 @@ class DebtorApiTestCase(TestCase):
         self.debtor = Debtor.objects.create(
             name='test',
             contact_info='test',
-            initial_debt=100,
             legal_status='Active',
         )
     
@@ -82,14 +77,12 @@ class DebtorApiTestCase(TestCase):
         response = self.client.post('/api/debtor', {
             'name': 'test',
             'contact_info': 'test',
-            'initial_debt': 100,
             'legal_status': 'Active',
         })
         self.assertEqual(response.status_code, 201)
         self.assertDictContainsSubset(response.data, {
             'name': 'test',
             'contact_info': 'test',
-            'initial_debt': '100',
             'legal_status': 'Active',
         })
 
@@ -102,7 +95,6 @@ class DebtorApiTestCase(TestCase):
             'id': id,
             'name': 'test',
             'contact_info': 'test',
-            'initial_debt': '100.00',
             'legal_status': 'Active',
         })
 
@@ -112,14 +104,12 @@ class DebtorApiTestCase(TestCase):
         response = self.client.put(f'/api/debtor/{id}', data={
             'name': 'test2',
             'contact_info': 'test',
-            'initial_debt': 100,
             'legal_status': 'Active',
         }, content_type='application/json', data_type='json')
         self.assertEqual(response.status_code, 200)
         self.assertDictContainsSubset(response.data, {
             'name': 'test2',
             'contact_info': 'test',
-            'initial_debt': '100.00',
             'legal_status': 'Active',
         })
 

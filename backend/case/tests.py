@@ -14,7 +14,6 @@ class CaseTestCase(TestCase):
         debtor = Debtor.objects.create(
             name='test',
             contact_info='test',
-            initial_debt=1000,
             legal_status='Active',
         )
         worker = Worker.objects.create(
@@ -66,7 +65,6 @@ class CaseFormTestCase(TestCase):
         debtor = Debtor.objects.create(
             name='test',
             contact_info='test',
-            initial_debt=1000,
             legal_status='Active',
         )
         worker = Worker.objects.create(
@@ -86,7 +84,6 @@ class CaseApiTestCase(TestCase):
         self.debtor = Debtor.objects.create(
             name='test',
             contact_info='test',
-            initial_debt=1000,
             legal_status='Active',
         )
         self.worker = Worker.objects.create(

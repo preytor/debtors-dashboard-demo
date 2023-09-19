@@ -5,4 +5,4 @@ from .models import Debtor
 class DebtorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Debtor
-        fields = ('id', 'name', 'contact_info', 'initial_debt', 'legal_status')
+        fields = ('id', 'name', 'contact_info', 'legal_status')

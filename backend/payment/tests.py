@@ -13,7 +13,6 @@ class PaymentTestCase(TestCase):
         debtor = Debtor.objects.create(
             name='test',
             contact_info='test',
-            initial_debt=1000,
             legal_status='Active',
         )
         Payment.objects.create(
@@ -63,7 +62,6 @@ class PaymentFormTestCase(TestCase):
         debtor = Debtor.objects.create(
             name='test',
             contact_info='test',
-            initial_debt=1000,
             legal_status='Active',
         )
         form = PaymentForm(data={
@@ -80,7 +78,6 @@ class PaymentApiTestCase(TestCase):
         self.debtor = Debtor.objects.create(
             name='test',
             contact_info='test',
-            initial_debt=1000,
             legal_status='Active',
         )
         self.payment = Payment.objects.create(
