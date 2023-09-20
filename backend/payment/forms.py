@@ -4,9 +4,9 @@ from .models import Payment
 class PaymentForm(forms.ModelForm):
     class Meta:
         model = Payment
-        fields = ('debtor', 'payment_date', 'payment_amount', 'payment_status')
+        fields = ('case', 'payment_date', 'payment_amount', 'payment_status')
         labels = {
-            'debtor': 'Debtor',
+            'case': 'Case',
             'payment_date': 'Payment Date',
             'payment_amount': 'Payment Amount',
             'payment_status': 'Payment Status',
@@ -16,7 +16,7 @@ class PaymentForm(forms.ModelForm):
         payment_status = forms.ChoiceField(choices=PAYMENT_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
 
         widgets = {
-            'debtor': forms.Select(attrs={'class': 'form-control'}),
+            'case': forms.Select(attrs={'class': 'form-control'}),
             'payment_date': forms.DateInput(attrs={'class': 'form-control'}),
             'payment_amount': forms.NumberInput(attrs={'class': 'form-control'}),
         }

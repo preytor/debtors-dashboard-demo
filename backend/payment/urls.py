@@ -2,7 +2,7 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
-    path('payments/<str:debtor_id>', PaymentViewSet.as_view({
+    path('payments/<str:case_id>', PaymentViewSet.as_view({
         'get': 'list_payments',
     }), name='payments'),
     path('payment', PaymentView.as_view({

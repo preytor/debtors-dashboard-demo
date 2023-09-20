@@ -4,7 +4,7 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 
 from .models import Payment
-from debtors.models import Debtor
+from case.models import Case
 from .forms import PaymentForm
 from .serializer import PaymentSerializer
 from .filters import PaymentFilter
@@ -17,17 +17,17 @@ class PaymentViewSet(viewsets.ModelViewSet):
 
     pagination_class = CustomPagination
     
-    def list_payments(self, request, debtor_id):
+    def list_payments(self, request, case_id):
         self.filterset_class = PaymentFilter
-        debtor = get_object_or_404(Debtor, id=debtor_id)
-        queryset = Payment.objects.order_by('id').filter(debtor=debtor)
-        debtor = self.request.query_params.get('debtor', None)
+        case = get_object_or_404(Case, id=case_id)
+        queryset = Payment.objects.order_by('id').filter(case=case)
+        case = self.request.query_params.get('case', None)
         payment_date = self.request.query_params.get('payment_date', None)
         payment_amount = self.request.query_params.get('payment_amount', None)
         payment_status = self.request.query_params.get('payment_status', None)
 
-        if debtor is not None:
-            queryset = queryset.filter(debtor=debtor)
+        if case is not None:
+            queryset = queryset.filter(case=case)
         if payment_date is not None:
             queryset = queryset.filter(payment_date=payment_date)
         if payment_amount is not None:

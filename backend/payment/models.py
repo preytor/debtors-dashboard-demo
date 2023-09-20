@@ -1,11 +1,11 @@
 from django.db import models
 
-from debtors.models import Debtor
+from case.models import Case
 
 # Create your models here.
 class Payment(models.Model):
     id = models.AutoField(primary_key=True)
-    debtor = models.ForeignKey(Debtor, on_delete=models.CASCADE)
+    case = models.ForeignKey(Case, on_delete=models.CASCADE, null=True)
     payment_date = models.DateField()
     payment_amount = models.DecimalField(max_digits=10, decimal_places=2)
     payment_status = models.CharField(max_length=50, choices=[
