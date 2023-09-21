@@ -10,7 +10,6 @@ class Case(models.Model):
     assigned_worker = models.ForeignKey(Worker, on_delete=models.CASCADE)
     case_status = models.CharField(max_length=50, choices=[
         ("Open", "Open"),
-        ("In progress", "In progress"),
         ("Closed", "Closed"),
     ])
     borrowed_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
