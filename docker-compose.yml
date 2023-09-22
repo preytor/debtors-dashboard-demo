@@ -40,19 +40,19 @@ services:
     depends_on:
       - db
     #restart: always
-  #next-frontend:
-  #  env_file:
-  #    - ./frontend/.env
-  #  build:
-  #    context: .
-  #    dockerfile: ./docker/Dockerfile-nextjs
-  #  container_name: frontend-nextjs
-  #  ports:
-  #    - "${NEXTJS_PORT}:3002"
-  #  volumes:
-  #    - ./frontend/nextjs:/usr/src/app
-  #  depends_on:
-  #    - django-backend
+  frontend:
+    env_file:
+      - ./frontend/frontend_debtors/.env
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile-nextjs
+    container_name: frontend-nextjs
+    ports:
+      - "${NEXTJS_PORT}:3000"
+    volumes:
+      - ./frontend/frontend_debtors:/app
+    depends_on:
+      - backend
     #restart: on-failure
 # Names our volume
 networks:
