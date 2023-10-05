@@ -1,4 +1,11 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+    experimental: {
+        serverComponentsExternalPackages: ['reactstrap'],
+    },
+    images: {
+        domains: ['xsgames.co'],
+    },
+}
 
 module.exports = nextConfig
