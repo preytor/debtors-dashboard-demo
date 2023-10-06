@@ -2,6 +2,7 @@
 const nextConfig = {
     experimental: {
         serverComponentsExternalPackages: ['reactstrap'],
+        serverActions: true,
     },
     images: {
         domains: ['xsgames.co'],
