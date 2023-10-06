@@ -1,0 +1,8 @@
+.logo {
+    width: "auto";
+    height: "auto";
+}
+
+a .logo {
+    padding-bottom: 30px;
+}
