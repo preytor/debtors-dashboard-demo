@@ -1,6 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.min.css'
-import 'bootstrap-icons/font/bootstrap-icons.css'
-
 import { Button, Nav, NavItem, NavLink } from 'reactstrap';
 import styles from './sidebar.module.css';
 
