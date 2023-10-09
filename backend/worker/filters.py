@@ -1,7 +1,5 @@
 from rest_framework import filters
 
-from .models import Worker
-
 class WorkerFilter(filters.BaseFilterBackend):
 
     def filter_queryset(self, request, queryset, view):
