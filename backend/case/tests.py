@@ -1,7 +1,9 @@
+from unittest import mock
 from django.test import TestCase
 from rest_framework.test import APIRequestFactory
 
-from datetime import date
+import pytz
+import datetime
 
 from .models import Case
 from debtors.models import Debtor
@@ -95,6 +97,11 @@ class CaseApiTestCase(TestCase):
             debtor=self.debtor,
             assigned_worker=self.worker,
             case_status="Open",
+            borrowed_amount=1000,
+            payment_frequency=None,
+            interest_rate=1,
+            amortization_period=1,
+            created_at="2023-10-09T04:30:00Z"
         )
 
     # Get all cases from a debtor
@@ -144,14 +151,25 @@ class CaseApiTestCase(TestCase):
             'debtor': self.debtor.id,
             'assigned_worker': self.worker.id,
             'case_status': 'Open',
+            'borrowed_amount': '1000.00',
+            'payment_frequency': None,
+            'interest_rate': '1.00',
+            'amortization_period': 1,
+            'created_at': self.case.created_at.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
         })
 
     # Update case
-    def test_put_case(self):
+    @mock.patch('django.utils.timezone.now')
+    def test_put_case(self, mock_now):
+        mock_now.return_value = datetime.datetime(2023, 10, 9, 4, 30, tzinfo=pytz.UTC).strftime("%Y-%m-%dT%H:%M:%S.%fZ")
         response = self.client.put(f'/api/case/{self.case.id}', data={
             'debtor': self.debtor.id,
             'assigned_worker': self.worker.id,
             'case_status': 'Closed',
+            'borrowed_amount': 1000,
+            'payment_frequency': None,
+            'interest_rate': 1,
+            'amortization_period': 1
         }, content_type='application/json', data_type='json')
         self.assertEqual(response.status_code, 200)
         self.assertDictContainsSubset(response.data, {
@@ -159,6 +177,11 @@ class CaseApiTestCase(TestCase):
             'debtor': self.debtor.id,
             'assigned_worker': self.worker.id,
             'case_status': 'Closed',
+            'borrowed_amount': '1000.00',
+            'payment_frequency': None,
+            'interest_rate': '1.00',
+            'amortization_period': 1,
+            'created_at': response.data['created_at'],
         })
 
     # Delete case
