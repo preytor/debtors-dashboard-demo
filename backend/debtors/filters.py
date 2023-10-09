@@ -1,14 +1,20 @@
-from django_filters import rest_framework as filters
+from rest_framework import filters
 
-from backend_debtors.filters import LikeFilter
-from .models import Debtor
+class DebtorFilter(filters.BaseFilterBackend):
 
-class DebtorFilter(filters.FilterSet):
-
-    name = LikeFilter(field_name='name')
-    contact_info = LikeFilter(field_name='contact_info')
-    legal_status = LikeFilter(field_name='legal_status')
-
-    class Meta:
-        model = Debtor
-        fields = ['name', 'contact_info', 'legal_status']
+    def filter_queryset(self, request, queryset, view):
+        name = request.query_params.get('name', None)
+        contact_info = request.query_params.get('contact_info', None)
+        legal_status = request.query_params.get('legal_status', None)
+        ordering = request.query_params.get('ordering', None)
+        if name:
+            queryset = queryset.filter(name__icontains=name)
+        if contact_info:
+            queryset = queryset.filter(contact_info__icontains=contact_info)
+        if legal_status:
+            queryset = queryset.filter(legal_status=legal_status)
+        if ordering:
+            queryset = queryset.order_by(ordering)
+        else:
+            queryset = queryset.order_by('id')
+        return queryset

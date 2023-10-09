@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from rest_framework.response import Response
 
 from .models import Debtor
@@ -12,20 +12,15 @@ from backend_debtors.paginations import CustomPagination
 
 # Create your views here.
 # We get a filtered view for the debtor
-class DebtorViewSet(viewsets.ModelViewSet):
+class DebtorViewSet(generics.ListAPIView):
 
+    queryset = Debtor.objects.all()
+    serializer_class = DebtorSerializer
     pagination_class = CustomPagination
+    filter_backends = (DebtorFilter,)
 
     def list_debtors(self, request):
-        self.filterset_class = DebtorFilter
-        queryset = Debtor.objects.order_by('id')
-        name = self.request.query_params.get('name', None)
-        legal_status = self.request.query_params.get('legal_status', None)
-
-        if name is not None:
-            queryset = queryset.filter(name=name)
-        if legal_status is not None:
-            queryset = queryset.filter(legal_status=legal_status)
+        queryset = self.filter_queryset(self.get_queryset())
 
         # Define the number of items per page
         page = self.paginate_queryset(queryset)

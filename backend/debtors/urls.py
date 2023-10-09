@@ -2,9 +2,7 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
-    path('debtors', DebtorViewSet.as_view({
-        'get': 'list_debtors',
-    }), name='debtors'),
+    path('debtors', DebtorViewSet.as_view()),
     path('debtor', DebtorView.as_view({
         'post': 'create_debtor',
     }), name='debtor_data'),
