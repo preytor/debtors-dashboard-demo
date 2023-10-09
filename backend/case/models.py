@@ -24,3 +24,20 @@ class Case(models.Model):
 
     class Meta:
         db_table = "case"
+
+class CaseView(models.Model):
+    id = models.IntegerField(primary_key=True)
+    assigned_worker = models.IntegerField(db_column='assigned_worker_id')
+    assigned_worker_name = models.CharField(max_length=50)
+    debtor = models.IntegerField(db_column='debtor_id')
+    debtor_name = models.CharField(max_length=50)
+    case_status = models.CharField(max_length=50)
+    borrowed_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    payment_frequency = models.CharField(max_length=50)
+    interest_rate = models.DecimalField(max_digits=5, decimal_places=2)
+    amortization_period = models.IntegerField()
+    created_at = models.DateTimeField()
+
+    class Meta:
+        db_table = "case_view"
+        managed = False

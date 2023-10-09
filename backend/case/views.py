@@ -3,9 +3,9 @@ from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, generics
 from rest_framework.response import Response
 
-from .models import Case
+from .models import Case, CaseView
 from .forms import CaseForm
-from .serializer import CaseSerializer
+from .serializer import CaseSerializer, CaseViewSerializer
 from .filters import CaseFilter
 
 from backend_debtors.paginations import CustomPagination
@@ -14,8 +14,8 @@ from backend_debtors.paginations import CustomPagination
 # We get a filtered view for the case
 class CaseViewSet(generics.ListAPIView):
 
-    queryset = Case.objects.all()
-    serializer_class = CaseSerializer
+    queryset = CaseView.objects.all()
+    serializer_class = CaseViewSerializer
     pagination_class = CustomPagination
     filter_backends = (CaseFilter,)
 
@@ -26,10 +26,10 @@ class CaseViewSet(generics.ListAPIView):
         page = self.paginate_queryset(queryset)
 
         if page is not None:
-            serializer = CaseSerializer(page, many=True)
+            serializer = CaseViewSerializer(page, many=True)
             return self.get_paginated_response(serializer.data)
         
-        serializer = CaseSerializer(queryset, many=True)
+        serializer = CaseViewSerializer(queryset, many=True)
         return Response(serializer.data)
     
 # We do a crud of the case with a view

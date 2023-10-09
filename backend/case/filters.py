@@ -33,11 +33,13 @@ class CaseFilter(filters.BaseFilterBackend):
         created_at_lt = request.query_params.get('created_at_lt', None)
         created_at_lte = request.query_params.get('created_at_lte', None)
 
+        ordering = request.query_params.get('ordering', None)
+
         if debtor:
-            queryset = queryset.filter(debtor__id=debtor)
+            queryset = queryset.filter(debtor=debtor)
 
         if assigned_worker:
-            queryset = queryset.filter(assigned_worker__id=assigned_worker)
+            queryset = queryset.filter(assigned_worker=assigned_worker)
 
         if case_status:
             queryset = queryset.filter(case_status=case_status)
@@ -88,6 +90,10 @@ class CaseFilter(filters.BaseFilterBackend):
             queryset = queryset.filter(created_at__lt=created_at_lt)
         if created_at_lte:
             queryset = queryset.filter(created_at__lte=created_at_lte)
-            
+
+        if ordering:
+            queryset = queryset.order_by(ordering)
+        else:
+            queryset = queryset.order_by('id')
         return queryset
     
