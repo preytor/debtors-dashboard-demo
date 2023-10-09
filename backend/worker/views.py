@@ -2,8 +2,6 @@ from django.shortcuts import get_object_or_404
 
 from rest_framework import viewsets, generics
 from rest_framework.response import Response
-from rest_framework.filters import OrderingFilter, SearchFilter
-
 from .models import Worker
 from .forms import WorkerForm
 from .serializer import WorkerSerializer
