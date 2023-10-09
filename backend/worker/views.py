@@ -1,7 +1,8 @@
 from django.shortcuts import get_object_or_404
 
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from rest_framework.response import Response
+from rest_framework.filters import OrderingFilter, SearchFilter
 
 from .models import Worker
 from .forms import WorkerForm
@@ -12,20 +13,15 @@ from backend_debtors.paginations import CustomPagination
 
 # Create your views here.
 # We get a filtered view for the worker
-class WorkerViewSet(viewsets.ModelViewSet):
+class WorkerViewSet(generics.ListAPIView):
 
+    queryset = Worker.objects.all()
+    serializer_class = WorkerSerializer
     pagination_class = CustomPagination
+    filter_backends = (WorkerFilter,)
     
-    def list_workers(self, request):
-        self.filterset_class = WorkerFilter
-        queryset = Worker.objects.order_by('id')
-        name = self.request.query_params.get('name', None)
-        role = self.request.query_params.get('role', None)
-
-        if name is not None:
-            queryset = queryset.filter(name=name)
-        if role is not None:
-            queryset = queryset.filter(role=role)
+    def list(self, request):
+        queryset = self.filter_queryset(self.get_queryset())
 
         # Define the number of items per page
         page = self.paginate_queryset(queryset)
