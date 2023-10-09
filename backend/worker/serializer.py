@@ -6,3 +6,8 @@ class WorkerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Worker
         fields = ('id', 'name', 'contact_info', 'role')
+
+class CaseWorkerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Worker
+        fields = ('id', 'name')

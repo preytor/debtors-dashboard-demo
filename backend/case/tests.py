@@ -1,6 +1,7 @@
 from unittest import mock
 from django.test import TestCase
 from rest_framework.test import APIRequestFactory
+from collections import OrderedDict
 
 import pytz
 import datetime
@@ -115,15 +116,13 @@ class CaseApiTestCase(TestCase):
         response = self.client.get(f'/api/cases?assigned_worker={self.worker.id}')
         self.assertEqual(response.status_code, 200)
         self.assertGreaterEqual(len(response.data['results']), 1)
-    """
+    
     # Get all cases from a worker and a debtor
     def test_get_all_cases_from_worker_and_debtor(self):
-        print("case data: ", self.case.__dict__)
         response = self.client.get(f'/api/cases?assigned_worker={self.worker.id}&debtor={self.debtor.id}')
-        print(f"response.data for {self.worker.id} and {self.debtor.id}: {response.data}")
         self.assertEqual(response.status_code, 200)
         self.assertGreaterEqual(len(response.data['results']), 1)
-    """
+    
     def test_case_not_found(self):
         response = self.client.get(f'/api/cases?assigned_worker={self.worker.id - 100}')
         self.assertEqual(response.status_code, 200)
@@ -150,8 +149,14 @@ class CaseApiTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertDictContainsSubset(response.data, {
             'id': self.case.id,
-            'debtor': self.debtor.id,
-            'assigned_worker': self.worker.id,
+            'debtor': OrderedDict([
+                ('id', self.worker.id), 
+                ('name', self.worker.name)
+            ]),
+            'assigned_worker': OrderedDict([
+                ('id', self.worker.id), 
+                ('name', self.worker.name)
+            ]),
             'case_status': 'Open',
             'borrowed_amount': '1000.00',
             'payment_frequency': None,
@@ -176,8 +181,14 @@ class CaseApiTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertDictContainsSubset(response.data, {
             'id': self.case.id,
-            'debtor': self.debtor.id,
-            'assigned_worker': self.worker.id,
+            'debtor': OrderedDict([
+                ('id', self.worker.id), 
+                ('name', self.worker.name)
+            ]),
+            'assigned_worker': OrderedDict([
+                ('id', self.worker.id), 
+                ('name', self.worker.name)
+            ]),
             'case_status': 'Closed',
             'borrowed_amount': '1000.00',
             'payment_frequency': None,

@@ -5,7 +5,7 @@ from rest_framework.response import Response
 
 from .models import Case, CaseView
 from .forms import CaseForm
-from .serializer import CaseSerializer, CaseViewSerializer
+from .serializer import CaseSerializer
 from .filters import CaseFilter
 
 from backend_debtors.paginations import CustomPagination
@@ -14,8 +14,8 @@ from backend_debtors.paginations import CustomPagination
 # We get a filtered view for the case
 class CaseViewSet(generics.ListAPIView):
 
-    queryset = CaseView.objects.all()
-    serializer_class = CaseViewSerializer
+    queryset = Case.objects.all()
+    serializer_class = CaseSerializer
     pagination_class = CustomPagination
     filter_backends = (CaseFilter,)
 
@@ -26,10 +26,10 @@ class CaseViewSet(generics.ListAPIView):
         page = self.paginate_queryset(queryset)
 
         if page is not None:
-            serializer = CaseViewSerializer(page, many=True)
+            serializer = CaseSerializer(page, many=True)
             return self.get_paginated_response(serializer.data)
         
-        serializer = CaseViewSerializer(queryset, many=True)
+        serializer = CaseSerializer(queryset, many=True)
         return Response(serializer.data)
     
 # We do a crud of the case with a view

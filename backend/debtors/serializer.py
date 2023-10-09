@@ -6,3 +6,8 @@ class DebtorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Debtor
         fields = ('id', 'name', 'contact_info', 'legal_status')
+
+class CaseDebtorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Debtor
+        fields = ('id', 'name')

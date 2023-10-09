@@ -1,14 +1,19 @@
 from rest_framework import serializers
 
-from .models import Case, CaseView
+from worker.serializer import CaseWorkerSerializer
+from debtors.serializer import CaseDebtorSerializer
+from .models import Case
 
 class CaseSerializer(serializers.ModelSerializer):
-
+    #debtor_name = serializers.ReadOnlyField(source='debtor.name')
+    #worker_name = serializers.ReadOnlyField(source='assigned_worker.name')
+    assigned_worker = CaseWorkerSerializer(read_only=True)
+    debtor = CaseDebtorSerializer(read_only=True)
     class Meta:
         model = Case
         fields = ('id', 
-                  'assigned_worker',
                   'debtor',
+                  'assigned_worker',
                   'case_status', 
                   'borrowed_amount', 
                   'payment_frequency', 
@@ -16,21 +21,3 @@ class CaseSerializer(serializers.ModelSerializer):
                   'amortization_period', 
                   'created_at')
         
-class CaseViewSerializer(serializers.ModelSerializer):
-
-    #assigned_worker_name = serializers.CharField(source='assigned_worker.name', read_only=True)
-    #debtor_name = serializers.CharField(source='debtor.name', read_only=True)
-
-    class Meta:
-        model = CaseView
-        fields = ('id',
-                  'assigned_worker',
-                  'assigned_worker_name',
-                  'debtor',
-                  'debtor_name',
-                  'case_status',
-                  'borrowed_amount',
-                  'payment_frequency',
-                  'interest_rate',
-                  'amortization_period',
-                  'created_at')
