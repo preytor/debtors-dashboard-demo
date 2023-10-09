@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='CaseView',
             fields=[
-                ('case_id', models.IntegerField(primary_key=True, serialize=False)),
+                ('id', models.IntegerField(primary_key=True, serialize=False)),
                 ('assigned_worker_id', models.IntegerField()),
                 ('assigned_worker_name', models.CharField(max_length=50)),
                 ('debtor_id', models.IntegerField()),

@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
             """
             CREATE OR REPLACE VIEW case_view AS
             SELECT
-                c.id as case_id,
+                c.id as id,
                 c.assigned_worker_id,
                 w.name AS assigned_worker_name,
                 c.debtor_id,
