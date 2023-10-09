@@ -1,11 +1,9 @@
 from django.shortcuts import get_object_or_404
 
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from rest_framework.response import Response
 
 from .models import Case
-from debtors.models import Debtor
-from worker.models import Worker
 from .forms import CaseForm
 from .serializer import CaseSerializer
 from .filters import CaseFilter
@@ -14,23 +12,15 @@ from backend_debtors.paginations import CustomPagination
 
 # Create your views here.
 # We get a filtered view for the case
-class CaseViewSet(viewsets.ModelViewSet):
+class CaseViewSet(generics.ListAPIView):
 
+    queryset = Case.objects.all()
+    serializer_class = CaseSerializer
     pagination_class = CustomPagination
+    filter_backends = (CaseFilter,)
 
-    def list_cases(self, request):
-        self.filterset_class = CaseFilter
-        queryset = Case.objects.order_by('id').all()
-        debtor = self.request.query_params.get('debtor', None)
-        assigned_worker = self.request.query_params.get('assigned_worker', None)
-        case_status = self.request.query_params.get('case_status', None)
-
-        if debtor is not None:
-            queryset = queryset.filter(debtor=debtor)
-        if assigned_worker is not None:
-            queryset = queryset.filter(assigned_worker=assigned_worker)
-        if case_status is not None:
-            queryset = queryset.filter(case_status=case_status)
+    def list(self, request):
+        queryset = self.filter_queryset(self.get_queryset())
 
         # Define the number of items per page
         page = self.paginate_queryset(queryset)

@@ -2,9 +2,7 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
-    path('cases', CaseViewSet.as_view({
-        'get': 'list_cases',
-    }), name='cases'),
+    path('cases', CaseViewSet.as_view()),
     path('case', CaseView.as_view({
         'post': 'create_case',
     }), name='case_data'),
