@@ -110,11 +110,16 @@ export class WorkersTableComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.sortSubscription.unsubscribe();
-    this.sortChangeSubscription.unsubscribe();
-    this.workerDialogRef.unsubscribe();
-    this.deleteWorkerSubscription.unsubscribe();
-    this.updateWorkerSubscription.unsubscribe();
+    if (this.sortSubscription)
+      this.sortSubscription.unsubscribe();
+    if (this.sortChangeSubscription)
+      this.sortChangeSubscription.unsubscribe();
+    if (this.workerDialogRef)
+      this.workerDialogRef.unsubscribe();
+    if (this.deleteWorkerSubscription)
+      this.deleteWorkerSubscription.unsubscribe();
+    if (this.updateWorkerSubscription)
+      this.updateWorkerSubscription.unsubscribe();
   }
 
 
