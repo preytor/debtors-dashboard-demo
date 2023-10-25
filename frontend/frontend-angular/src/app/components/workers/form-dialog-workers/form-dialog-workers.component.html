@@ -1,0 +1,46 @@
+<mat-card class="card">
+    <mat-card-header class="flex justify-items-center">
+        <h1 mat-dialog-title>Add a new worker</h1>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+    <div mat-dialog-content class="flex flex-col">
+        <div>
+            <label>Name</label>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>Enter name</mat-label>
+                <input matInput [(ngModel)]="formData.name">
+            </mat-form-field>
+        </div>
+        <div>
+            <label>Contact info</label>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>Enter contact info</mat-label>
+                <input matInput [(ngModel)]="formData.contact_info">  
+            </mat-form-field>
+        </div>
+        <div>
+            <label>Role</label>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>Select role</mat-label>
+                <mat-select matSelect [(ngModel)]="formData.role">
+                    <mat-option value="Collections Specialist">Collections Specialist</mat-option>
+                    <mat-option value="Collections Supervisor">Collections Supervisor</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+    </mat-card-content>
+    <mat-card-actions class="flex justify-end">
+        <div mat-dialog-actions>
+        <button mat-button (click)="onNoClick(null)">No Thanks</button>
+        <button mat-button (click)="onYesClick()" >Ok</button>
+        </div>
+    </mat-card-actions>
+</mat-card>

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { WorkersTableComponent } from './components/workers-table/workers-table.component';
+import { WorkersTableComponent } from './components/workers/workers-table/workers-table.component';
 import { CasesComponent } from './components/cases/cases.component';
 import { DebtorsComponent } from './components/debtors/debtors.component';
 
