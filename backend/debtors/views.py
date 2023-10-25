@@ -39,7 +39,8 @@ class DebtorView(viewsets.ModelViewSet):
         form = DebtorForm(request.POST)
         if form.is_valid():
             form.save()
-        return Response(form.data, status=201)
+            return Response(form.data, status=201)
+        return Response(form.errors, status=400)
     
     # Read
     def list_debtors(self, request):

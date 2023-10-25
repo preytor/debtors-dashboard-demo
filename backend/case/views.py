@@ -39,7 +39,8 @@ class CaseView(viewsets.ModelViewSet):
         form = CaseForm(request.POST)
         if form.is_valid():
             form.save()
-        return Response(form.data, status=201)
+            return Response(form.data, status=201)
+        return Response(form.errors, status=400)
     
     # Read
     def get_case_data(self, request, pk):
