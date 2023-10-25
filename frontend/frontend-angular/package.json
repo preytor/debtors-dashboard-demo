@@ -22,6 +22,7 @@
     "@angular/router": "^16.2.0",
     "@ng-icons/bootstrap-icons": "^25.4.0",
     "@ng-icons/core": "^25.4.0",
+    "@ng-icons/material-icons": "^25.4.0",
     "flowbite": "^1.8.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
