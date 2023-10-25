@@ -91,7 +91,7 @@ class WorkerApiTestCase(TestCase):
             'name': 'testAPI2',
             'contact_info': 'testAPI2',
             'role': 'testAPI2',
-        }, content_type='application/json', data_type='json')
+        }, format='multipart')
         self.assertEqual(response.status_code, 201)
         self.assertDictContainsSubset(response.data, {
             'name': 'testAPI2',
