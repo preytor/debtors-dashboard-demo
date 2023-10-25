@@ -50,4 +50,16 @@ export class WorkersService {
   deleteWorker(workerId: number): Observable<any> {
     return this.http.delete(`${environment.backend_url}/api/worker/${workerId}`);
   }
+
+  getWorker(workerId: number): Observable<any> {
+    return this.http.get(`${environment.backend_url}/api/worker/${workerId}`);
+  }
+
+  updateWorker(workerId: number, workerData: WorkerForm): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.put(`${environment.backend_url}/api/worker/${workerId}`, workerData, {headers: headers});
+  }
 }
