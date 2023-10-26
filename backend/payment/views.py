@@ -64,11 +64,11 @@ class PaymentView(viewsets.ModelViewSet):
     # Update
     def update_payment_data(self, request, pk):
         payment = get_object_or_404(Payment, id=pk)
-        form = PaymentForm(instance=payment, data=request.data)
-        if form.is_valid():
-            form.save()
-            return Response(form.data)
-        return Response(form.errors, status=400)
+        serializer = PaymentSerializer(instance=payment, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
     
     # Delete
     def delete_payment_data(self, request, pk):

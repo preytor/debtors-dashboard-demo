@@ -56,11 +56,11 @@ class DebtorView(viewsets.ModelViewSet):
     # Update
     def update_debtor_data(self, request, pk):
         debtor = get_object_or_404(Debtor, id=pk)
-        form = DebtorForm(request.POST, instance=debtor)
-        if form.is_valid():
-            form.save()
-            return Response(form.data)
-        return Response(form.errors, status=400)
+        serializer = DebtorSerializer(instance=debtor, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
     
     # Delete
     def delete_debtor_data(self, request, pk):

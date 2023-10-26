@@ -178,6 +178,7 @@ class PaymentApiTestCase(TestCase):
 
     # Update payment by id
     def test_put_payment(self):
+        id = self.payment.id
         response = self.client.put(path=f'/api/payment/{self.payment.id}', data={
             'case': self.case.id,
             'payment_date': date(2021, 1, 1),
@@ -186,9 +187,10 @@ class PaymentApiTestCase(TestCase):
         }, content_type='application/json', data_type='json')
         self.assertEqual(response.status_code, 200)
         self.assertDictContainsSubset(response.data, {
+            'id': id,
             'case': self.case.id,
             'payment_date': '2021-01-01',
-            'payment_amount': 100,
+            'payment_amount': '100.00',
             'payment_status': 'Missed',
         })
 
