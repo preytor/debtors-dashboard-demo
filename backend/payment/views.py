@@ -67,7 +67,8 @@ class PaymentView(viewsets.ModelViewSet):
         form = PaymentForm(instance=payment, data=request.data)
         if form.is_valid():
             form.save()
-        return Response(form.data)
+            return Response(form.data)
+        return Response(form.errors, status=400)
     
     # Delete
     def delete_payment_data(self, request, pk):

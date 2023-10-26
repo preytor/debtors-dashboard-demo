@@ -58,7 +58,8 @@ class WorkerView(viewsets.ModelViewSet):
         serializer = WorkerSerializer(instance=worker, data=request.data)
         if serializer.is_valid():
             serializer.save()
-        return Response(serializer.data)
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
     
     # Delete
     def delete_worker_data(self, request, pk):

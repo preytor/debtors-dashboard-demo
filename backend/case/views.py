@@ -54,7 +54,8 @@ class CaseView(viewsets.ModelViewSet):
         serializer = CaseSerializer(instance=case, data=request.data)
         if serializer.is_valid():
             serializer.save()
-        return Response(serializer.data)
+            return Response(serializer.data)
+        return Response(serializer.errors)
     
     # Delete
     def delete_case_data(self, request, pk):

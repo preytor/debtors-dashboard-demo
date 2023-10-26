@@ -59,7 +59,8 @@ class DebtorView(viewsets.ModelViewSet):
         form = DebtorForm(request.POST, instance=debtor)
         if form.is_valid():
             form.save()
-        return Response(form.data)
+            return Response(form.data)
+        return Response(form.errors, status=400)
     
     # Delete
     def delete_debtor_data(self, request, pk):
