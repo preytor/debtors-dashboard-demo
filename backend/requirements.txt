@@ -2,6 +2,7 @@ django
 djangorestframework
 django-cors-headers
 django-filter
+django-advanced-filters
 markdown
 python-decouple
 mysqlclient
