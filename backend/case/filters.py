@@ -1,4 +1,6 @@
 from rest_framework import filters
+from django.contrib import admin
+from advanced_filters.admin import AdminAdvancedFiltersMixin
 
 class CaseFilter(filters.BaseFilterBackend):
     
@@ -96,4 +98,64 @@ class CaseFilter(filters.BaseFilterBackend):
         else:
             queryset = queryset.order_by('id')
         return queryset
+
     
+class DebtorIdAdminFilter(admin.SimpleListFilter):
+    title = 'Debtor'
+    parameter_name = 'debtor'
+
+    def lookups(self, request, model_admin):
+        return (
+            (None, None),
+        )
+    
+    def choices(self, changelist):
+        query_params = changelist.get_filter_params()
+        query_params.pop(self.parameter_name, None)
+        all_choice = next(super().choices(changelist))
+        all_choice['query_params'] = query_params
+        yield all_choice
+
+    def queryset(self, request, queryset):
+        debtor_id = self.value()
+        if debtor_id:
+            return queryset.filter(debtor__id=debtor_id)
+        
+            
+class AssignedWorkerAdminFilter(admin.SimpleListFilter):
+    title = 'Assigned Worker'
+    parameter_name = 'assigned_worker'
+
+    def lookups(self, request, model_admin):
+        return (
+            (None, None),
+        )
+
+    def queryset(self, request, queryset):
+        assigned_worker_id = self.value()
+        if assigned_worker_id:
+            # Ensure the input value is a valid integer before filtering
+            try:
+                assigned_worker_id = int(assigned_worker_id)
+            except ValueError:
+                return queryset.none()  # Return an empty queryset for non-integer input
+
+            return queryset.filter(assigned_worker__id=assigned_worker_id)
+        return queryset
+        
+
+class CaseStatusAdminFilter(admin.SimpleListFilter):
+    title = 'case status'
+    parameter_name = 'case_status'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('open', 'Open'),
+            ('closed', 'Closed'),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value() == 'open':
+            return queryset.filter(case_status='open')
+        if self.value() == 'closed':
+            return queryset.filter(case_status='closed')
