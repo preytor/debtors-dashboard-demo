@@ -106,7 +106,6 @@ class DebtorApiTestCase(TestCase):
             'contact_info': 'test',
             'legal_status': 'Active',
         }, content_type='application/json', data_type='json')
-        print("response", response.data)
         self.assertEqual(response.status_code, 200)
         self.assertDictContainsSubset(response.data, {
             'id': id,
