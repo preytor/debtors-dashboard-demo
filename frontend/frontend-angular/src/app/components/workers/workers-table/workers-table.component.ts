@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -16,6 +16,7 @@ import { FormDialogWorkersComponent } from '../form-dialog-workers/form-dialog-w
 
 import {MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
 import { DeleteItemDialogComponent } from '../../common/delete-item-dialog/delete-item-dialog.component';
+import { FilterWorkersDialogComponent } from '../filter-workers-dialog/filter-workers-dialog.component';
 
 @Component({
   selector: 'app-workers-table',
@@ -39,6 +40,8 @@ import { DeleteItemDialogComponent } from '../../common/delete-item-dialog/delet
   styleUrls: ['./workers-table.component.css']
 })
 export class WorkersTableComponent implements AfterViewInit, OnDestroy {
+  
+  @ViewChild('input') inputElement!: ElementRef;
   displayedColumns: string[] = ['id', 'name', 'contact_info', 'role', 'actions'];
   workers: any[] = [];
 
@@ -58,6 +61,8 @@ export class WorkersTableComponent implements AfterViewInit, OnDestroy {
   those search results are saved in the args variable*/
 
   args: WorkerSearch = {};
+
+  searched_name: any;
 
   page: number = 0;
   pageSize: number = 10;
@@ -131,7 +136,18 @@ export class WorkersTableComponent implements AfterViewInit, OnDestroy {
   }
 
   filterWorkers() {
-    console.log("filter workers clicked")
+    console.log("filter workers clicked, current args:", this.args)
+    const workerDialog = this.dialog.open(FilterWorkersDialogComponent, {
+      data: this.args
+    }).afterClosed()
+
+    this.workerDialogRef = workerDialog.subscribe(result => {
+      console.log('The dialog was closed', result);
+      if (result !== undefined){
+        this.args = result;
+        this.refreshTable();
+      }
+    });
   }
 
   addWorker() {

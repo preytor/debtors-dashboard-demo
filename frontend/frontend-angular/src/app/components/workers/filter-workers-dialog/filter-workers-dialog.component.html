@@ -1,0 +1,50 @@
+<mat-card>
+    <mat-card-header class="flex justify-items-center">
+        <h1 mat-dialog-title>Worker filters</h1>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+    <div mat-dialog-content class="flex flex-col justify-items-stretch">
+        <div>
+            <label>Contact info</label>
+        </div>
+        <div>
+            <mat-form-field [formGroup]="form">
+                <mat-label>contact info contains this text</mat-label>
+                <input formControlName="contact_info" matInput>  
+            </mat-form-field>
+        </div>
+        <div>
+            <label>Role</label>
+        </div>
+        <div>
+            <span class="filter-section">
+                <mat-checkbox
+                    [checked]="allComplete"
+                    [color]="roles.color"
+                    [indeterminate]="someComplete()"
+                    (change)="setAll($event.checked)">
+                    {{roles.name}}
+                </mat-checkbox>
+            </span>
+            <span>
+                <ul class="filter-list-section">
+                    <li *ngFor="let subrole of roles.subroles">
+                    <mat-checkbox [(ngModel)]="subrole.completed"
+                                    [color]="subrole.color"
+                                    (ngModelChange)="updateAllComplete()">
+                        {{subrole.name}}
+                    </mat-checkbox>
+                    </li>
+                </ul>
+            </span>
+    </div>
+    </div>
+    </mat-card-content>
+    <mat-card-actions class="flex justify-end">
+        <div mat-dialog-actions>
+        <button mat-button (click)="onNoClick()">Cancel</button>
+        <button mat-raised-button color="primary" (click)="onYesClick()" >Apply</button>
+        </div>
+    </mat-card-actions>
+</mat-card>

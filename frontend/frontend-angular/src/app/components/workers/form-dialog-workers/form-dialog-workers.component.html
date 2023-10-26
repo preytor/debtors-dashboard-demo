@@ -1,35 +1,35 @@
-<mat-card class="card">
+<mat-card>
     <mat-card-header class="flex justify-items-center">
-        <h1 mat-dialog-title>Add a new worker</h1>
+        <h1 mat-dialog-title>{{formTitle}} worker</h1>
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content>
-    <div mat-dialog-content class="flex flex-col">
+    <div mat-dialog-content class="flex flex-col justify-items-stretch">
         <div>
             <label>Name</label>
         </div>
         <div>
-            <mat-form-field>
+            <mat-form-field [formGroup]="form">
                 <mat-label>Enter name</mat-label>
-                <input matInput [(ngModel)]="formData.name">
+                <input formControlName="name" matInput>
             </mat-form-field>
         </div>
         <div>
             <label>Contact info</label>
         </div>
         <div>
-            <mat-form-field>
+            <mat-form-field [formGroup]="form">
                 <mat-label>Enter contact info</mat-label>
-                <input matInput [(ngModel)]="formData.contact_info">  
+                <input formControlName="contact_info" matInput>  
             </mat-form-field>
         </div>
         <div>
             <label>Role</label>
         </div>
         <div>
-            <mat-form-field>
+            <mat-form-field [formGroup]="form">
                 <mat-label>Select role</mat-label>
-                <mat-select matSelect [(ngModel)]="formData.role">
+                <mat-select formControlName="role" matSelect>
                     <mat-option value="Collections Specialist">Collections Specialist</mat-option>
                     <mat-option value="Collections Supervisor">Collections Supervisor</mat-option>
                 </mat-select>
@@ -39,8 +39,8 @@
     </mat-card-content>
     <mat-card-actions class="flex justify-end">
         <div mat-dialog-actions>
-        <button mat-button (click)="onNoClick(null)">No Thanks</button>
-        <button mat-button (click)="onYesClick()" >Ok</button>
+        <button mat-button (click)="onNoClick(null)">Cancel</button>
+        <button mat-raised-button color="primary" (click)="onYesClick()" >Confirm</button>
         </div>
     </mat-card-actions>
 </mat-card>

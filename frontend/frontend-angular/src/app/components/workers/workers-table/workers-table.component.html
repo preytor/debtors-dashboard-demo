@@ -4,7 +4,12 @@
   </button>
   <mat-form-field>
       <mat-label>Filter</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Filter name" #input>
+      <input 
+        matInput 
+        (keyup)="applyFilter($event)"
+        placeholder="Filter name" 
+        #input
+      >
     </mat-form-field>
   <button mat-raised-button color="primary" class="mat-mdc-form-button" (click)="addWorker()">Add worker</button>
 </div>
